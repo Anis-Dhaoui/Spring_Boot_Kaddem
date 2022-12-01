@@ -1,0 +1,51 @@
+package tn.janis.kaddem.Controllers;
+
+import lombok.extern.log4j.Log4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import tn.janis.kaddem.Entity.Contract;
+import tn.janis.kaddem.Services.IContractService;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("contracts")
+public class ContractController {
+    @Autowired
+    IContractService iContractService;
+
+//    $$$$$$$$$$$$$$$$ GET ALL CONTRACTS $$$$$$$$$$$$$$$$
+    @GetMapping("/fetch")
+    public ResponseEntity<Object> fetchAllContracts(){
+        List<Contract> contracts = iContractService.getAllContract();
+        return new ResponseEntity<>(contracts, HttpStatus.ACCEPTED);
+    }
+
+//    $$$$$$$$$$$$$$$$ ADD NEW CONTRACT $$$$$$$$$$$$$$$$
+    @PostMapping("/add")
+    public ResponseEntity<Object> postNewContract(@RequestBody Contract c){
+        iContractService.addContract(c);
+        return new ResponseEntity<>("Contract added successfully", HttpStatus.CREATED);
+    }
+
+    //    $$$$$$$$$$$$$$$$ UPDATE CONTRACT $$$$$$$$$$$$$$$$
+    @PutMapping("/update/{id}")
+    public ResponseEntity<Object> updateContract(@PathVariable("id") long id, @RequestBody Contract c){
+        System.out.println(id);
+        return iContractService.updateContract(id, c);
+    }
+    //    $$$$$$$$$$$$$$$$ DELETE CONTRACT $$$$$$$$$$$$$$$$
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<Object> deleteContract(@PathVariable("id") long id){
+        return iContractService.deleteContract(id);
+    }
+
+//    @PostMapping("/add")
+//    public Contract postNewContract(@RequestBody Contract c){
+//        return  iContractService.addContract(c);
+//    }
+
+
+}
