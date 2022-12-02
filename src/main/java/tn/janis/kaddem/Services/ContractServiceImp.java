@@ -46,8 +46,11 @@ public class ContractServiceImp implements IContractService{
     }
 
     @Override
-    public Contract getContractById(long id) {
-        return null;
+    public ResponseEntity<Object> getContractById(long id) {
+        if(contractRepo.existsById(id)){
+            return new ResponseEntity<>(contractRepo.findById(id).get(), HttpStatus.OK);
+        }
+        return new ResponseEntity<>("Contract not found", HttpStatus.NOT_FOUND);
     }
 
     @Override
@@ -55,18 +58,21 @@ public class ContractServiceImp implements IContractService{
         return null;
     }
 
+    //    $$$$$$$$$$$$$$$ GET CONTRACTS BY THEMATIQUE USING KEYWORDS $$$$$$$$$$$$$$$
     @Override
     public List<Contract> getAllContractByThematique(String themat) {
-        return null;
+        return contractRepo.findByStudentTeamsTeamDetailThematique(themat);
     }
 
+    //    $$$$$$$$$$$$$$$ GET CONTRACTS BY UNIVERSITY ID USING JPQL $$$$$$$$$$$$$$$
     @Override
     public List<Contract> getAllContractByIdUnivWithJpql(long idUniv) {
-        return null;
+        return contractRepo.getAllContratByIdUnivWithJpql(idUniv);
     }
 
+    //    $$$$$$$$$$$$$$$$ GET ALL CONTRACTS BY UNIVERSITY ID USING SQL QUERY $$$$$$$$$$$$$$$
     @Override
     public List<Contract> getAllContractByIdUnivWithSql(long idUniv) {
-        return null;
+        return contractRepo.repoGetAllContratByUnivId(idUniv);
     }
 }

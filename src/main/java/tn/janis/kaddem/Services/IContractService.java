@@ -16,7 +16,7 @@ public interface IContractService {
 
     ResponseEntity<Object> deleteContract(long id);
 
-    Contract getContractById(long id);
+    ResponseEntity<Object> getContractById(long id);
 
     List<Contract> getAllContractByIdUniv(long idUniv);
 

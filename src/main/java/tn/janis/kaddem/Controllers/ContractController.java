@@ -1,6 +1,5 @@
 package tn.janis.kaddem.Controllers;
 
-import lombok.extern.log4j.Log4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -42,10 +41,28 @@ public class ContractController {
         return iContractService.deleteContract(id);
     }
 
-//    @PostMapping("/add")
-//    public Contract postNewContract(@RequestBody Contract c){
-//        return  iContractService.addContract(c);
-//    }
+    @GetMapping("/fetch/{id}")
+    public ResponseEntity<Object> getOneContract(@PathVariable("id") long id){
+        return iContractService.getContractById(id);
+    }
+
+    //    $$$$$$$$$$$$$$$$ GET ALL CONTRACTS BY UNIVERSITY ID USING SQL QUERY $$$$$$$$$$$$$$$
+    @GetMapping("/univ/{id}")
+    public List<Contract> fetchContractByUniV(@PathVariable("id") long id) {
+        return iContractService.getAllContractByIdUniv(id);
+    }
 
 
+    //    $$$$$$$$$$$$$$$$ GET ALL CONTRACTS BY UNIVERSITY ID USING SQL QUERY $$$$$$$$$$$$$$$
+    @GetMapping("/univ/{thematique}")
+    public List<Contract> fetchContractByThematique(@PathVariable("thematique") String thematique) {
+        return iContractService.getAllContractByThematique(thematique);
+    }
+
+
+    //    $$$$$$$$$$$$$$$ GET CONTRACTS BY UNIVERSITY ID USING JPQL $$$$$$$$$$$$$$$
+    @GetMapping("/univ/{id}")
+    public List<Contract> fetchContractByUnivIdWithJpql(@PathVariable("id") long id) {
+        return iContractService.getAllContractByIdUnivWithJpql(id);
+    }
 }
